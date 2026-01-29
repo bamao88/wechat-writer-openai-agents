@@ -1,0 +1,21 @@
+# Mini Writer Agent 依赖清单
+
+# OpenAI SDK
+openai>=1.0.0
+
+# 环境变量管理
+python-dotenv>=1.0.0
+
+# HTTP 请求
+httpx>=0.25.0
+requests>=2.31.0
+
+# 数据处理
+pydantic>=2.0.0
+
+# 日志与工具
+loguru>=0.7.0
+
+# 测试框架
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
