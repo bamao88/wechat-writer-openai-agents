@@ -5,6 +5,9 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any
 
+from dotenv import load_dotenv
+load_dotenv()
+
 from agent import create_agent_with_tools, run_agent
 from notebooklm_tool import run_search
 from logger import create_trace_id
@@ -83,14 +86,35 @@ def save_report(topic: str, content: str, trace_id: str) -> str:
     return str(filepath)
 
 
-async def main():
-    """Main entry point."""
-    topic = "人工智能的发展与应用"
+async def main(topic: str):
+    """Main entry point.
+    
+    Args:
+        topic: The topic to write about.
+    """
+    print(f"选题: {topic}")
+    print("正在生成文章...(预计2-3分钟)")
+    print()
+    
     result = await run_workflow(topic)
-    print(f"Article generated: {result['output_path']}")
+    
+    print()
+    print(f"✅ 文章已保存: {result['output_path']}")
     print(f"Trace ID: {result['trace_id']}")
 
 
 if __name__ == "__main__":
+    import sys
     import asyncio
-    asyncio.run(main())
+    
+    if len(sys.argv) > 1:
+        # 从命令行参数获取选题
+        topic = " ".join(sys.argv[1:])
+    else:
+        # 交互式输入选题
+        topic = input("请输入选题: ").strip()
+        if not topic:
+            print("错误: 选题不能为空")
+            sys.exit(1)
+    
+    asyncio.run(main(topic))
